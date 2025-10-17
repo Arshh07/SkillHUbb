@@ -1,12 +1,15 @@
 package test.skillspace.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.server.ResponseStatusException;
 import test.skillspace.model.Gig;
 import test.skillspace.model.User;
 import test.skillspace.repository.GigRepository;
@@ -23,36 +26,44 @@ public class GigController {
     @Autowired
     private UserRepository userRepository;
 
-    // Show the form to create a new gig
     @GetMapping("/gigs/new")
     public String showCreateGigForm(Model model) {
         model.addAttribute("gig", new Gig());
         return "create-gig";
     }
 
-    // Process the form submission for a new gig
     @PostMapping("/gigs/create")
     public String createGig(Gig gig, @AuthenticationPrincipal UserDetails userDetails) {
-        // Find the currently logged-in user
         User currentUser = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        
-        // Associate the gig with the freelancer
         gig.setFreelancer(currentUser);
         gigRepository.save(gig);
-        
         return "redirect:/gigs/my-gigs";
     }
 
-    // Show the gigs for the currently logged-in freelancer
     @GetMapping("/gigs/my-gigs")
     public String showMyGigs(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         User currentUser = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-        
         List<Gig> myGigs = gigRepository.findByFreelancerId(currentUser.getId());
         model.addAttribute("gigs", myGigs);
-        
+        model.addAttribute("currentUser", currentUser); // Pass user to template
         return "my-gigs";
+    }
+
+    @PostMapping("/gigs/delete/{id}")
+    public String deleteGig(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
+        User currentUser = userRepository.findByUsername(userDetails.getUsername())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        Gig gig = gigRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        if (!gig.getFreelancer().getId().equals(currentUser.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to delete this gig.");
+        }
+
+        gigRepository.deleteById(id);
+        return "redirect:/gigs/my-gigs";
     }
 }

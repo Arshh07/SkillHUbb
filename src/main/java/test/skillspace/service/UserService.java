@@ -17,7 +17,8 @@ public class UserService {
 
     public User saveUser(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("FREELANCER"); // Default role for new users
+        // The role is now set from the registration form, so we no longer set it here.
+        // user.setRole("FREELANCER"); // <-- REMOVE THIS LINE
         return userRepository.save(user);
     }
 }

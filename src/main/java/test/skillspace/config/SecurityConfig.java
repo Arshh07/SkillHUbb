@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.authority.SimpleGrantedAuthority; // Import this
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -11,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import test.skillspace.repository.UserRepository;
 
-import java.util.ArrayList;
+import java.util.Collections; // Import this
 
 @Configuration
 @EnableWebSecurity
@@ -28,7 +29,9 @@ public class SecurityConfig {
             .map(user -> new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),
-                new ArrayList<>()))
+                // This line is updated to include the user's role as an authority
+                Collections.singletonList(new SimpleGrantedAuthority(user.getRole()))
+            ))
             .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
     }
 
@@ -36,7 +39,9 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/css/**", "/register", "/about").permitAll()
+                // Grant access to /gigs/** only to users with the FREELANCER role
+                .requestMatchers("/gigs/**").hasAuthority("FREELANCER")
+                .requestMatchers("/css/**", "/register", "/about", "/login").permitAll()
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form

@@ -1,21 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>Payment - Skillspace</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
-     <nav class="navbar">
-         <a href="/dashboard" class="logo">Skillspace</a>
-         <ul class="nav-links">
-             <li><a th:href="@{/dashboard}">Home</a></li>
-             <li><a th:href="@{/gigs/my-gigs}">My Gigs</a></li> <li><a th:href="@{/about}">About</a></li>
-             <li>
-                 <form th:action="@{/logout}" method="post"><button type="submit" class="logout-button">Logout</button></form>
-             </li>
-         </ul>
-    </nav>
+     <div th:replace="~{fragments/navbar :: navbar}"></div>
+
     <div class="container">
         <div class="form-container" style="max-width: 600px;">
             <h1>Confirm Your Order</h1>
@@ -24,12 +16,10 @@
                 <p><strong>Freelancer:</strong> <span th:text="${gig.freelancer.username}"></span></p>
                 <p><strong>Price:</strong> <span th:text="'$' + ${gig.price}"></span></p>
                 <hr>
-                <p>This is a placeholder payment page. In a real application, a payment gateway like Stripe or PayPal would be integrated here.</p>
+                <p>This is a placeholder payment page.</p>
                 <a href="#" class="btn">Proceed to Pay (Not Implemented)</a>
             </div>
-            <div th:if="${gig == null}">
-                <p class="alert alert-danger">Gig not found.</p>
-            </div>
+            <div th:if="${gig == null}"><p class="alert alert-danger">Gig not found.</p></div>
         </div>
     </div>
 </body>
