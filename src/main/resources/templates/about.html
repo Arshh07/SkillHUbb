@@ -10,7 +10,7 @@
          <a href="/dashboard" class="logo">Skillspace</a>
          <ul class="nav-links">
              <li><a th:href="@{/dashboard}">Home</a></li>
-             <li><a th:href="@{/about}">About</a></li>
+             <li><a th:href="@{/gigs/my-gigs}">My Gigs</a></li> <li><a th:href="@{/about}">About</a></li>
              <li>
                  <form th:action="@{/logout}" method="post"><button type="submit" class="logout-button">Logout</button></form>
              </li>
@@ -18,9 +18,10 @@
     </nav>
     <div class="container">
         <h1>About Skillspace</h1>
-        <p>Welcome to Skillspace, connecting talented freelancers with clients who need their skills.</p>
+        <p>Welcome to Skillspace, the premier platform connecting talented freelancers with clients who need their skills. Our initiative is to create a seamless and trustworthy environment for collaboration.</p>
         <h2>Contact Us</h2>
-        <p>Email: contact@skillspace.test | Phone: 123-456-7890</p>
+        <p>Email: contact@skillspace.test</p>
+        <p>Phone: 123-456-7890</p>
     </div>
 </body>
 </html>

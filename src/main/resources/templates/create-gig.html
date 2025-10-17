@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create New Gig - Skillspace</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/dashboard" class="logo">Skillspace</a>
+        <ul class="nav-links">
+            <li><a th:href="@{/dashboard}">Home</a></li>
+            <li><a th:href="@{/gigs/my-gigs}">My Gigs</a></li>
+            <li><a th:href="@{/about}">About</a></li>
+            <li><form th:action="@{/logout}" method="post"><button type="submit" class="logout-button">Logout</button></form></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <div class="form-container" style="max-width: 600px;">
+            <h1>Create a New Gig</h1>
+            <p>Describe the service you will be offering.</p>
+            <form th:action="@{/gigs/create}" th:object="${gig}" method="post">
+                <div class="form-group">
+                    <label for="title">Gig Title</label>
+                    <input type="text" id="title" th:field="*{title}" placeholder="e.g., I will create a modern logo design" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" th:field="*{description}" rows="5" placeholder="Provide details about your service..." required></textarea>
+                </div>
+                 <div class="form-group">
+                    <label for="price">Price ($)</label>
+                    <input type="number" id="price" th:field="*{price}" step="0.01" min="5" placeholder="e.g., 50.00" required>
+                </div>
+                <button type="submit" class="btn">Create Gig</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

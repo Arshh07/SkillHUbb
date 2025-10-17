@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Skillspace</title>
+    <title>My Gigs - Skillspace</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
@@ -12,25 +12,26 @@
             <li><a th:href="@{/dashboard}">Home</a></li>
             <li><a th:href="@{/gigs/my-gigs}">My Gigs</a></li>
             <li><a th:href="@{/about}">About</a></li>
-            <li>
-                <form th:action="@{/logout}" method="post"><button type="submit" class="logout-button">Logout</button></form>
-            </li>
+            <li><form th:action="@{/logout}" method="post"><button type="submit" class="logout-button">Logout</button></form></li>
         </ul>
     </nav>
 
     <div class="container">
-        <h1>Available Services</h1>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h1>My Gigs</h1>
+            <a th:href="@{/gigs/new}" class="btn" style="width: auto;">Create New Gig</a>
+        </div>
+        <hr>
         <div th:if="${gigs.isEmpty()}">
-            <p>No gigs available at the moment. Freelancers need to create some!</p>
+            <p>You haven't created any gigs yet. <a th:href="@{/gigs/new}">Create one now!</a></p>
         </div>
         <div class="gig-grid" th:unless="${gigs.isEmpty()}">
             <div class="gig-card" th:each="gig : ${gigs}">
                 <div class="gig-card-content">
                     <h3 th:text="${gig.title}">Gig Title</h3>
-                    <p class="freelancer">by <span th:text="${gig.freelancer.username}">Freelancer Name</span></p>
                     <p class="price" th:text="'$' + ${gig.price}">$50.00</p>
-                    <a th:href="@{/pay/{id}(id=${gig.id})}" class="btn">Order Now</a>
-                </div>
+                    <p><em>(This is one of your gigs)</em></p>
+                    </div>
             </div>
         </div>
     </div>
