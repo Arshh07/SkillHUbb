@@ -2,30 +2,31 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Create New Gig - Skillspace</title>
+    <title>Create New Gig - SkillHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <div class="container">
-        <div class="form-container" style="max-width: 600px;">
-            <h1>Create a New Gig</h1>
-            <p>Describe the service you will be offering.</p>
+        <div class="form-container" style="max-width: 700px;">
+            <h1>Offer a New Service</h1>
+            <p style="text-align: center; color: var(--paragraph-text);">Describe the service you will be offering to clients.</p>
+            <br>
             <form th:action="@{/gigs/create}" th:object="${gig}" method="post">
                 <div class="form-group">
                     <label for="title">Gig Title</label>
-                    <input type="text" id="title" th:field="*{title}" placeholder="e.g., I will create a modern logo design" required>
+                    <input type="text" id="title" th:field="*{title}" placeholder="e.g., I will design a stunning modern logo for your brand" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <textarea id="description" th:field="*{description}" rows="5" placeholder="Provide details about your service..." required></textarea>
+                    <textarea id="description" th:field="*{description}" rows="5" placeholder="Provide details about your service, what's included, and why clients should choose you..." required></textarea>
                 </div>
                  <div class="form-group">
                     <label for="price">Price ($)</label>
                     <input type="number" id="price" th:field="*{price}" step="0.01" min="5" placeholder="e.g., 50.00" required>
                 </div>
-                <button type="submit" class="btn">Create Gig</button>
+                <button type="submit" class="btn">Publish Gig</button>
             </form>
         </div>
     </div>

@@ -2,18 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>About Us - Skillspace</title>
+    <title>About Us - SkillHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
-    <div class="container">
-        <h1>About Skillspace</h1>
-        <p>Welcome to Skillspace, the premier platform connecting talented freelancers with clients who need their skills. Our initiative is to create a seamless and trustworthy environment for collaboration.</p>
-        <h2>Contact Us</h2>
-        <p>Email: contact@skillspace.test</p>
-        <p>Phone: 123-456-7890</p>
+    <div class="container" style="text-align: center; max-width: 800px;">
+        <h1 style="font-size: 2.5rem;">About Skill<span>Hub</span></h1>
+        <p style="font-size: 1.1rem; color: var(--paragraph-text);">
+            SkillHub is the nexus where creativity meets opportunity. Our mission is to build a premier digital ecosystem that empowers talented freelancers and connects them with innovative clients worldwide. We are dedicated to fostering a seamless, trustworthy, and collaborative environment for every project.
+        </p>
+        <h2 style="margin-top: 40px;">Contact Us</h2>
+        <p>For inquiries and support, please reach out to our team.</p>
+        <p><strong>Email:</strong> <a href="mailto:contact@skillhub.test">contact@skillhub.test</a></p>
+        <p><strong>Phone:</strong> 123-456-7890</p>
     </div>
 </body>
 </html>

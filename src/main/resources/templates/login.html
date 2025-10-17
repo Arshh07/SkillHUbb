@@ -2,15 +2,18 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login - Skillspace</title>
+    <title>Login - SkillHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <div class="form-container">
-        <h1>Welcome Back!</h1>
+        <h1>Welcome to SkillHub</h1>
+        <p style="text-align: center; color: var(--paragraph-text);">Log in to continue your journey.</p>
+        <br>
         <div th:if="${param.error}" class="alert alert-danger">Invalid username or password.</div>
         <div th:if="${param.logout}" class="alert alert-success">You have been logged out.</div>
         <div th:if="${param.success}" class="alert alert-success">Registration successful! Please log in.</div>
+
         <form th:action="@{/login}" method="post">
             <div class="form-group">
                 <label for="username">Username</label>
@@ -20,7 +23,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn">Login</button>
+            <button type="submit" class="btn">Login Securely</button>
         </form>
         <div class="form-footer">
             <p>Don't have an account? <a th:href="@{/register}">Sign Up</a></p>

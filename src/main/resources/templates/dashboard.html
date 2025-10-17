@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - Skillspace</title>
+    <title>Dashboard - SkillHub</title>
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
 
     <div class="container">
-        <h1>Available Services</h1>
+        <h1>Find The Perfect Freelance Service</h1>
         <div th:if="${gigs.isEmpty()}">
             <p>No gigs available at the moment. Freelancers need to create some!</p>
         </div>
@@ -19,7 +19,7 @@
                     <h3 th:text="${gig.title}">Gig Title</h3>
                     <p class="freelancer">by <span th:text="${gig.freelancer.username}">Freelancer Name</span></p>
                     <p class="price" th:text="'$' + ${gig.price}">$50.00</p>
-                    <a th:href="@{/pay/{id}(id=${gig.id})}" class="btn">Order Now</a>
+                    <a th:href="@{/pay/{id}(id=${gig.id})}" class="btn">View Service</a>
                 </div>
             </div>
         </div>

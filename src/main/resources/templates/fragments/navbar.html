@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <body>
     <nav class="navbar" th:fragment="navbar">
-        <a href="/dashboard" class="logo">Skillspace</a>
+        <a th:href="@{/dashboard}" class="logo">Skill<span>Hub</span></a>
         <ul class="nav-links">
             <li><a th:href="@{/dashboard}">Home</a></li>
             <li sec:authorize="hasAuthority('FREELANCER')"><a th:href="@{/gigs/my-gigs}">My Gigs</a></li>
