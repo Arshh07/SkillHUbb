@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - Skillspace</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/dashboard" class="logo">Skillspace</a>
+        <ul class="nav-links">
+            <li><a th:href="@{/dashboard}">Home</a></li>
+            <li><a th:href="@{/about}">About</a></li>
+            <li>
+                <form th:action="@{/logout}" method="post"><button type="submit" class="logout-button">Logout</button></form>
+            </li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Available Services</h1>
+        <div th:if="${gigs.isEmpty()}"><p>No gigs available yet.</p></div>
+        <div class="gig-grid" th:unless="${gigs.isEmpty()}">
+            <div class="gig-card" th:each="gig : ${gigs}">
+                <div class="gig-card-content">
+                    <h3 th:text="${gig.title}">Gig Title</h3>
+                    <p class="freelancer">by <span th:text="${gig.freelancer.username}">Freelancer</span></p>
+                    <p class="price" th:text="'$' + ${gig.price}">$50.00</p>
+                    <a th:href="@{/pay/{id}(id=${gig.id})}" class="btn">Order Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

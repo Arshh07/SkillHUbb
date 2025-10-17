@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>About Us - Skillspace</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <nav class="navbar">
+         <a href="/dashboard" class="logo">Skillspace</a>
+         <ul class="nav-links">
+             <li><a th:href="@{/dashboard}">Home</a></li>
+             <li><a th:href="@{/about}">About</a></li>
+             <li>
+                 <form th:action="@{/logout}" method="post"><button type="submit" class="logout-button">Logout</button></form>
+             </li>
+         </ul>
+    </nav>
+    <div class="container">
+        <h1>About Skillspace</h1>
+        <p>Welcome to Skillspace, connecting talented freelancers with clients who need their skills.</p>
+        <h2>Contact Us</h2>
+        <p>Email: contact@skillspace.test | Phone: 123-456-7890</p>
+    </div>
+</body>
+</html>
