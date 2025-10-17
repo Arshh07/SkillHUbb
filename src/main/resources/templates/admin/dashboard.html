@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - SkillHub</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p>Welcome, Administrator. Use the navigation to manage the platform.</p>
+        <div class="gig-grid" style="margin-top: 30px;">
+            <a th:href="@{/admin/users}" class="gig-card" style="text-decoration: none;">
+                <div class="gig-card-content" style="text-align: center;"><h3>Manage Users</h3></div>
+            </a>
+            <a th:href="@{/admin/gigs}" class="gig-card" style="text-decoration: none;">
+                <div class="gig-card-content" style="text-align: center;"><h3>Manage Gigs</h3></div>
+            </a>
+            <a th:href="@{/admin/messages}" class="gig-card" style="text-decoration: none;">
+                <div class="gig-card-content" style="text-align: center;"><h3>View Messages</h3></div>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

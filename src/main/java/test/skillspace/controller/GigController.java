@@ -14,7 +14,6 @@ import test.skillspace.model.Gig;
 import test.skillspace.model.User;
 import test.skillspace.repository.GigRepository;
 import test.skillspace.repository.UserRepository;
-
 import java.util.List;
 
 @Controller
@@ -37,6 +36,7 @@ public class GigController {
         User currentUser = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         gig.setFreelancer(currentUser);
+        // Logic for image URL removed.
         gigRepository.save(gig);
         return "redirect:/gigs/my-gigs";
     }
@@ -47,7 +47,6 @@ public class GigController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         List<Gig> myGigs = gigRepository.findByFreelancerId(currentUser.getId());
         model.addAttribute("gigs", myGigs);
-        model.addAttribute("currentUser", currentUser); // Pass user to template
         return "my-gigs";
     }
 
@@ -55,14 +54,11 @@ public class GigController {
     public String deleteGig(@PathVariable Long id, @AuthenticationPrincipal UserDetails userDetails) {
         User currentUser = userRepository.findByUsername(userDetails.getUsername())
                 .orElseThrow(() -> new RuntimeException("User not found"));
-
         Gig gig = gigRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-
         if (!gig.getFreelancer().getId().equals(currentUser.getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "You do not have permission to delete this gig.");
         }
-
         gigRepository.deleteById(id);
         return "redirect:/gigs/my-gigs";
     }

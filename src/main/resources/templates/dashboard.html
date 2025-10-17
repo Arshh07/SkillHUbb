@@ -7,19 +7,29 @@
 </head>
 <body>
     <div th:replace="~{fragments/navbar :: navbar}"></div>
-
     <div class="container">
-        <h1>Find The Perfect Freelance Service</h1>
-        <div th:if="${gigs.isEmpty()}">
-            <p>No gigs available at the moment. Freelancers need to create some!</p>
-        </div>
+        <section class="hero">
+            <h1>Find the Perfect Freelance Talent</h1>
+            <p>Unlock a world of top-tier freelancers and services for your projects.</p>
+            <form th:action="@{/dashboard}" method="get" class="search-form">
+                <input type="text" name="keyword" class="search-input" placeholder="e.g., modern logo design" th:value="${searchKeyword}">
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </section>
+        <h2 style="margin-bottom: 20px;" th:if="${searchKeyword != null}">Search Results for '<span th:text="${searchKeyword}"></span>'</h2>
+        <h2 style="margin-bottom: 20px;" th:unless="${searchKeyword != null}">Featured Services</h2>
+        <div th:if="${gigs.isEmpty()}"><p>No services found.</p></div>
         <div class="gig-grid" th:unless="${gigs.isEmpty()}">
             <div class="gig-card" th:each="gig : ${gigs}">
                 <div class="gig-card-content">
+                    <div class="freelancer-info" th:if="${gig.freelancer != null}">
+                        <span th:text="'By ' + ${gig.freelancer.username}">By Freelancer</span>
+                    </div>
                     <h3 th:text="${gig.title}">Gig Title</h3>
-                    <p class="freelancer">by <span th:text="${gig.freelancer.username}">Freelancer Name</span></p>
-                    <p class="price" th:text="'$' + ${gig.price}">$50.00</p>
-                    <a th:href="@{/pay/{id}(id=${gig.id})}" class="btn">View Service</a>
+                    <div class="gig-card-footer">
+                        <span class="price" th:text="'$' + ${gig.price}">$0.00</span>
+                        <a th:href="@{/gigs/{id}(id=${gig.id})}" class="btn">View</a>
+                    </div>
                 </div>
             </div>
         </div>

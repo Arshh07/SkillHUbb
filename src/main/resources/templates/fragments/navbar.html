@@ -6,8 +6,9 @@
         <ul class="nav-links">
             <li><a th:href="@{/dashboard}">Home</a></li>
             <li sec:authorize="hasAuthority('FREELANCER')"><a th:href="@{/gigs/my-gigs}">My Gigs</a></li>
-            <li><a th:href="@{/profile}">Profile</a></li>
+            <li sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/admin}">Admin Panel</a></li>
             <li><a th:href="@{/about}">About</a></li>
+            <li><a th:href="@{/profile}">Profile</a></li>
             <li>
                 <form th:action="@{/logout}" method="post"><button type="submit" class="logout-button">Logout</button></form>
             </li>

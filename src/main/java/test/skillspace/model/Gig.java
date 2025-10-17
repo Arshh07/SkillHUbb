@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "gigs")
@@ -20,4 +21,7 @@ public class Gig {
     @ManyToOne
     @JoinColumn(name = "freelancer_id")
     private User freelancer;
+
+    @OneToMany(mappedBy = "gig", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Review> reviews;
 }

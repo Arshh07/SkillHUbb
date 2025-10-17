@@ -30,6 +30,7 @@ public class ProfileController {
                 .orElseThrow(() -> new RuntimeException("User not found"));
         
         currentUser.setBio(user.getBio());
+        // Logic for profile picture URL removed.
         
         userRepository.save(currentUser);
         return "redirect:/profile?success";

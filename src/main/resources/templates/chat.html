@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat with <span th:text="${receiver.username}">User</span></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="container">
+        <h1>Chat with <span th:text="${receiver.username}">User</span></h1>
+        <div class="chat-container">
+            <div class="chat-messages">
+                <div th:each="msg : ${messages}"
+                     th:classappend="${msg.sender.username == #authentication.principal.username ? 'sent' : 'received'}"
+                     class="message">
+                    <span class="message-sender" th:text="${msg.sender.username}">Sender</span>
+                    <div class="message-bubble" th:text="${msg.content}">Message content</div>
+                </div>
+            </div>
+            <form th:action="@{/messages/send}" th:object="${newMessage}" method="post" class="chat-form">
+                <input type="hidden" name="receiver.id" th:value="${receiver.id}" />
+                <input type="text" th:field="*{content}" class="search-input" placeholder="Type a message..." autocomplete="off">
+                <button type="submit" class="search-button">Send</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

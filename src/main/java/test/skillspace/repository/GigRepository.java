@@ -2,9 +2,11 @@ package test.skillspace.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import test.skillspace.model.Gig;
-import java.util.List; // Import List
+import java.util.List;
 
 public interface GigRepository extends JpaRepository<Gig, Long> {
-    // Add this method
     List<Gig> findByFreelancerId(Long freelancerId);
+
+    // Method for searching gigs
+    List<Gig> findByTitleContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String titleKeyword, String descriptionKeyword);
 }

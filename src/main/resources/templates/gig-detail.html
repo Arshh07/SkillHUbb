@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${gig.title} + ' - SkillHub'"></title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="container">
+        <div class="form-container" style="max-width: 800px;">
+            <h1 th:text="${gig.title}">Gig Title</h1>
+            <p>
+                by
+                <a th:href="@{'/messages/' + ${gig.freelancer.id}}" th:text="${gig.freelancer.username}"
+                   th:if="${gig.freelancer != null}">Freelancer</a>
+                <span th:if="${gig.freelancer == null}">N/A</span>
+            </p>
+            <p th:text="${gig.description}">Gig description.</p>
+            <hr style="border-color: var(--border-color); margin: 20px 0;">
+            <p style="font-size: 1.4rem; text-align: center;"><strong>Price:</strong> <span th:text="'$' + ${gig.price}" style="color: var(--secondary-accent);"></span></p>
+            <a href="#" class="btn" style="width: 100%; margin-top: 20px;">Purchase Service (Not Implemented)</a>
+        </div>
+        
+        <div class="reviews-section">
+            <h2>Reviews</h2>
+            <div th:if="${gig.reviews.isEmpty()}"><p>No reviews yet.</p></div>
+            <div th:unless="${gig.reviews.isEmpty()}" class="review-list">
+                <div th:each="review : ${gig.reviews}" class="review-card">
+                    <div class="review-header">
+                        <span th:text="${review.client.username}">Client</span>
+                        <span class="star-rating" th:text="${'★' * review.rating} + ${'☆' * (5 - review.rating)}">★★★★★</span>
+                    </div>
+                    <p th:text="${review.comment}">Review comment.</p>
+                </div>
+            </div>
+            
+            <form th:action="@{/gigs/{gigId}/reviews(gigId=${gig.id})}" th:object="${newReview}" method="post" style="margin-top: 30px;">
+                <h3>Leave a Review</h3>
+                <div class="form-group">
+                    <label for="rating">Rating</label>
+                    <select id="rating" th:field="*{rating}" class="search-input" style="background: var(--background-dark);">
+                        <option value="5">5 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="2">2 Stars</option>
+                        <option value="1">1 Star</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="comment">Comment</label>
+                    <textarea id="comment" th:field="*{comment}" rows="4"></textarea>
+                </div>
+                <button type="submit" class="btn">Submit Review</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

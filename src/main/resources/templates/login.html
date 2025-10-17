@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="form-container">
-        <h1>Welcome to SkillHub</h1>
+        <h1>Welcome to Skill<span>Hub</span></h1>
         <p style="text-align: center; color: var(--paragraph-text);">Log in to continue your journey.</p>
         <br>
         <div th:if="${param.error}" class="alert alert-danger">Invalid username or password.</div>
@@ -23,7 +23,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" required>
             </div>
-            <button type="submit" class="btn">Login Securely</button>
+            <button type="submit" class="btn" style="width: 100%;">Login Securely</button>
         </form>
         <div class="form-footer">
             <p>Don't have an account? <a th:href="@{/register}">Sign Up</a></p>
