@@ -6,7 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// Removed BCrypt import
+import org.springframework.security.crypto.password.NoOpPasswordEncoder; // Import NoOpPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import test.skillspace.repository.UserRepository;
@@ -16,10 +17,13 @@ import test.skillspace.security.CustomUserDetails;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    // --- THIS IS THE CRITICAL CHANGE ---
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        // Use NoOpPasswordEncoder for plain text passwords
+        return NoOpPasswordEncoder.getInstance();
     }
+    // --- END OF CHANGE ---
 
     @Bean
     public UserDetailsService userDetailsService(UserRepository userRepository) {
@@ -33,7 +37,7 @@ public class SecurityConfig {
         http
             .authorizeHttpRequests(authz -> authz
                 .requestMatchers("/admin/**").hasAuthority("ADMIN")
-                .requestMatchers("/gigs/new", "/gigs/my-gigs").hasAuthority("FREELANCER")
+                .requestMatchers("/gigs/**").hasAuthority("FREELANCER") // Corrected path
                 .requestMatchers("/css/**", "/register", "/about", "/login").permitAll()
                 .anyRequest().authenticated()
             )

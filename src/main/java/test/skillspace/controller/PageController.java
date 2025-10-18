@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import test.skillspace.model.Gig;
-import test.skillspace.model.Review;
+import test.skillspace.model.Review; // Make sure Review is imported
 import test.skillspace.repository.GigRepository;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class PageController {
     public String showGigDetail(@PathVariable Long gigId, Model model) {
         Gig gig = gigRepository.findById(gigId).orElseThrow(() -> new RuntimeException("Gig not found"));
         model.addAttribute("gig", gig);
-        model.addAttribute("newReview", new Review());
+        model.addAttribute("newReview", new Review()); // Add empty review object for the form
         return "gig-detail";
     }
 

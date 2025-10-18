@@ -27,6 +27,7 @@ public class ReviewController {
         review.setGig(gig);
         reviewRepository.save(review);
 
+        // Redirect back to the gig detail page after submitting
         return "redirect:/gigs/" + gigId;
     }
 }

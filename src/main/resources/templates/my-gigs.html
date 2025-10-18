@@ -20,7 +20,6 @@
 
         <div class="gig-grid" th:unless="${gigs.isEmpty()}">
             <div class="gig-card" th:each="gig : ${gigs}">
-                <img th:src="${gig.imageUrl}" alt="Gig Image" class="gig-image" onerror="this.onerror=null; this.src='https://i.imgur.com/J8k2a7g.png';">
                 <div class="gig-card-content">
                     <h3 th:text="${gig.title}" style="margin-bottom: 15px;">Gig Title</h3>
                     <div class="gig-card-footer">

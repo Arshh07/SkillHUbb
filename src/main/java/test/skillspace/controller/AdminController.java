@@ -10,33 +10,35 @@ import test.skillspace.repository.MessageRepository;
 import test.skillspace.repository.UserRepository;
 
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin") // Base path for all admin routes
 public class AdminController {
 
     @Autowired private UserRepository userRepository;
     @Autowired private GigRepository gigRepository;
     @Autowired private MessageRepository messageRepository;
 
-    @GetMapping
+    @GetMapping // Maps to /admin
     public String adminDashboard() {
+        // Just returns the template name
         return "admin/dashboard";
     }
 
-    @GetMapping("/users")
+    @GetMapping("/users") // Maps to /admin/users
     public String viewUsers(Model model) {
         model.addAttribute("users", userRepository.findAll());
         return "admin/view-users";
     }
 
-    @GetMapping("/gigs")
+    @GetMapping("/gigs") // Maps to /admin/gigs
     public String viewGigs(Model model) {
         model.addAttribute("gigs", gigRepository.findAll());
         return "admin/view-gigs";
     }
 
-    @GetMapping("/messages")
+    @GetMapping("/messages") // Maps to /admin/messages
     public String viewMessages(Model model) {
-        model.addAttribute("messages", messageRepository.findAll());
+        // Fetch messages ordered by most recent first for better monitoring
+        model.addAttribute("messages", messageRepository.findAllByOrderByCreatedAtDesc()); 
         return "admin/view-messages";
     }
 }
